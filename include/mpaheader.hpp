@@ -1,6 +1,7 @@
 #pragma once
 #include "mpastream.hpp"
 
+#include <cstdint>
 #define MPA_HEADER_SIZE 4 // MPEG-Audio Header Size 32bit
 #define MAXTIMESREAD 5
 
@@ -40,13 +41,13 @@ private:
 
 	bool m_bLSF; // true means lower sampling frequencies (=MPEG2/MPEG2.5)
 
-	void Init(BYTE *pHeader, LPCTSTR szFilename);
+	void Init(char *pHeader, const char *szFilename);
 
 public:
-	static LPCTSTR m_szLayers[];
-	static LPCTSTR m_szMPEGVersions[];
-	static LPCTSTR m_szChannelModes[];
-	static LPCTSTR m_szEmphasis[];
+	static const char *m_szLayers[];
+	static const char *m_szMPEGVersions[];
+	static const char *m_szChannelModes[];
+	static const char *m_szEmphasis[];
 
 	enum MPAVersion
 	{
@@ -84,11 +85,11 @@ public:
 	std::uint32_t m_dwSamplesPerFrame;
 	std::uint32_t m_dwBitrate; // in bit per second (1 kb = 1000 bit, not 1024)
 	std::uint32_t m_dwPaddingSize;
-	WORD m_wBound;				  // only valid for intensity stereo
-	WORD m_wAllocationTableIndex; // only valid for MPEG 1 Layer II (0=table a, 1=table b,...)
+	std::uint16_t m_wBound;				   // only valid for intensity stereo
+	std::uint16_t m_wAllocationTableIndex; // only valid for MPEG 1 Layer II (0=table a, 1=table b,...)
 
 	// flags
 	bool m_bCopyright, m_bPrivate, m_bOriginal;
 	bool m_bCRC;
-	BYTE m_ModeExt;
+	char m_ModeExt;
 };

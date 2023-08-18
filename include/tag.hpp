@@ -1,12 +1,13 @@
 #pragma once
 #include "mpastream.hpp"
 
+#include <cstdint>
 class CTag
 {
 public:
 	std::uint32_t GetOffset() const { return m_dwOffset; };
 	std::uint32_t GetEnd() const { return m_dwOffset + m_dwSize; };
-	LPCTSTR GetName() const { return m_szName; };
+	const char *GetName() const { return m_szName; };
 	std::uint32_t GetSize() const { return m_dwSize; };
 	float GetVersion() const { return m_fVersion; };
 
@@ -15,13 +16,13 @@ public:
 protected:
 	CMPAStream *m_pStream;
 
-	CTag(CMPAStream *pStream, LPCTSTR szName, bool bAppended, std::uint32_t dwOffset = 0, std::uint32_t dwSize = 0);
+	CTag(CMPAStream *pStream, const char *szName, bool bAppended, std::uint32_t dwOffset = 0, std::uint32_t dwSize = 0);
 
 	std::uint32_t m_dwOffset; // beginning of tag
 	std::uint32_t m_dwSize;	  // size of tag
 	bool m_bAppended;		  // true if at the end of file
 	float m_fVersion;		  // format x.yz
-	LPTSTR m_szName;		  // name of tag
+	char *m_szName;			  // name of tag
 
-	void SetVersion(BYTE bVersion1, BYTE bVersion2 = 0, BYTE bVersion3 = 0);
+	void SetVersion(char bVersion1, char bVersion2 = 0, char bVersion3 = 0);
 };

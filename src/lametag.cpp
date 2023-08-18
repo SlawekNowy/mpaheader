@@ -2,7 +2,7 @@
 #include ".\lametag.h"
 
 
-LPCTSTR CLAMETag::m_szVBRInfo[10] = 
+const char* CLAMETag::m_szVBRInfo[10] = 
 {
 	_T("Unknown"),
 	_T("CBR"),
@@ -22,7 +22,7 @@ CLAMETag* CLAMETag::FindTag(CMPAStream* pStream, bool bAppended, std::uint32_t d
 	// check for LAME Tag extension (always 120 bytes after XING ID)
 	std::uint32_t dwOffset = dwBegin + 120;
 
-	BYTE* pBuffer = pStream->ReadBytes(9, dwOffset, false);
+	char* pBuffer = pStream->ReadBytes(9, dwOffset, false);
 	if (memcmp(pBuffer, "LAME", 4) == 0)
 		return new CLAMETag(pStream, bAppended, dwOffset);
 
@@ -32,21 +32,21 @@ CLAMETag* CLAMETag::FindTag(CMPAStream* pStream, bool bAppended, std::uint32_t d
 CLAMETag::CLAMETag(CMPAStream* pStream, bool bAppended, std::uint32_t dwOffset) :
 	CTag(pStream, _T("LAME"), bAppended, dwOffset)
 {
-	BYTE* pBuffer = pStream->ReadBytes(20, dwOffset, false);
+	char* pBuffer = pStream->ReadBytes(20, dwOffset, false);
 
-	CString strVersion = CString((char*)pBuffer+4, 4);
+	std::string strVersion = std::string((char*)pBuffer+4, 4);
 	m_fVersion = (float)_tstof(strVersion);
 	
 	// LAME prior to 3.90 writes only a 20 byte encoder string
 	if (m_fVersion < 3.90)
 	{
 		m_bSimpleTag = true;
-		m_strEncoder = CString((char*)pBuffer, 20);
+		m_strEncoder = std::string((char*)pBuffer, 20);
 	}
 	else
 	{
 		m_bSimpleTag = false;
-		m_strEncoder = CString((char*)pBuffer, 9);
+		m_strEncoder = std::string((char*)pBuffer, 9);
 		dwOffset += 9;
 
 		// cut off last period
@@ -54,7 +54,7 @@ CLAMETag::CLAMETag(CMPAStream* pStream, bool bAppended, std::uint32_t dwOffset) 
 			m_strEncoder.Delete(8);
 
 		// version information
-		BYTE bInfoAndVBR = *(pStream->ReadBytes(1, dwOffset));
+		char bInfoAndVBR = *(pStream->ReadBytes(1, dwOffset));
 
 		// revision info in 4 MSB
 		m_bRevision = bInfoAndVBR & 0xF0;
@@ -105,7 +105,7 @@ bool CLAMETag::IsCBR() const
 	return false;
 }
 
-LPCTSTR CLAMETag::GetVBRInfo() const
+const char* CLAMETag::GetVBRInfo() const
 {
 	if (m_bVBRInfo > 9)
 		return m_szVBRInfo[0];

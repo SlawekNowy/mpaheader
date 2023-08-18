@@ -1,6 +1,7 @@
 #pragma once
 #include "tag.hpp"
 
+#include <cstdint>
 class CMusicMatchTag : public CTag
 {
 public:

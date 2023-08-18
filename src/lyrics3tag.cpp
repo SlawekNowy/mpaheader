@@ -6,7 +6,7 @@ CLyrics3Tag *CLyrics3Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint
 {
 	// stands at the end of file
 	std::uint32_t dwOffset = dwEnd - 9;
-	BYTE *pBuffer = pStream->ReadBytes(9, dwOffset, false, true);
+	char *pBuffer = pStream->ReadBytes(9, dwOffset, false, true);
 
 	// is it Lyrics 2 Tag
 	if (memcmp("LYRICS200", pBuffer, 9) == 0)
@@ -19,7 +19,7 @@ CLyrics3Tag *CLyrics3Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint
 
 CLyrics3Tag::CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVersion2) : CTag(pStream, _T("Lyrics3"), true, dwOffset)
 {
-	BYTE *pBuffer;
+	char *pBuffer;
 	if (bVersion2)
 	{
 		SetVersion(2);

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include ".\tag.h"
 
-CTag::CTag(CMPAStream* pStream, LPCTSTR szName, bool bAppended, std::uint32_t dwOffset, std::uint32_t dwSize):
+CTag::CTag(CMPAStream* pStream, const char* szName, bool bAppended, std::uint32_t dwOffset, std::uint32_t dwSize):
 	m_pStream(pStream), m_bAppended(bAppended), m_dwOffset(dwOffset), m_dwSize(dwSize)
 {
 	m_szName = _tcsdup(szName);
@@ -12,7 +12,7 @@ CTag::~CTag(void)
 	free(m_szName);
 }
 
-void CTag::SetVersion(BYTE bVersion1, BYTE bVersion2, BYTE bVersion3)
+void CTag::SetVersion(char bVersion1, char bVersion2, char bVersion3)
 {
 	// only values between 0 and 9 are displayed correctly
 	m_fVersion = bVersion1;

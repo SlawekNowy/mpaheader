@@ -4,7 +4,7 @@
 /// CMPAException: exception class
 //////////////////////////////////////////////
 
-CMPAException::CMPAException(ErrorIDs ErrorID, LPCTSTR szFile, LPCTSTR szFunction, bool bGetLastError) :
+CMPAException::CMPAException(ErrorIDs ErrorID, const char* szFile, const char* szFunction, bool bGetLastError) :
 	m_ErrorID(ErrorID), m_bGetLastError(bGetLastError), m_szErrorMsg(NULL)
 {
 	m_szFile = _tcsdup(szFile);
@@ -32,7 +32,7 @@ CMPAException::~CMPAException()
 }
 
 // should be in resource file for multi language applications
-LPCTSTR CMPAException::m_szErrors[CMPAException::NumIDs] = 
+const char* CMPAException::m_szErrors[CMPAException::NumIDs] = 
 {
 	_T("Can't open the file."), 
 	_T("Can't set file position."),
@@ -50,12 +50,12 @@ LPCTSTR CMPAException::m_szErrors[CMPAException::NumIDs] =
 #define MAX_ERR_LENGTH 256
 void CMPAException::ShowError()
 {
-	LPCTSTR pErrorMsg = GetErrorDescription();
+	const char* pErrorMsg = GetErrorDescription();
 	// show error message
 	::MessageBox (NULL, pErrorMsg, _T("MPAFile Error"), MB_OK);
 }
 
-LPCTSTR CMPAException::GetErrorDescription()
+const char* CMPAException::GetErrorDescription()
 {
 	if (!m_szErrorMsg)
 	{
@@ -79,17 +79,17 @@ LPCTSTR CMPAException::GetErrorDescription()
 		if (m_bGetLastError)
 		{
 			// get error message of last system error id
-			LPVOID pMsgBuf;
+			void* pMsgBuf;
 			if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 								NULL,
 								GetLastError(),
 								MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-								(LPTSTR) &pMsgBuf,
+								(char*) &pMsgBuf,
 								0,
 								NULL))
 			{
 				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, _T("\n"));
-				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, (LPCTSTR)pMsgBuf);
+				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, (const char*)pMsgBuf);
 				LocalFree(pMsgBuf);
 			}
 		}

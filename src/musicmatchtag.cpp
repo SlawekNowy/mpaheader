@@ -9,7 +9,7 @@ CMusicMatchTag* CMusicMatchTag::FindTag(CMPAStream* pStream, bool bAppended, std
 {
 	// check for footer at the end of file
 	std::uint32_t dwOffset = dwEnd - 48;
-	BYTE* pBuffer = pStream->ReadBytes(32, dwOffset, true);
+	char* pBuffer = pStream->ReadBytes(32, dwOffset, true);
 	if (memcmp("Brava Software Inc.             ", pBuffer, 32)==0)
 		return new CMusicMatchTag(pStream, dwOffset);
 	return NULL;
@@ -40,7 +40,7 @@ CMusicMatchTag::CMusicMatchTag(CMPAStream* pStream, std::uint32_t dwOffset) :
 //	std::uint32_t dwMetadataOffset = pStream->ReadLEValue(4, dwOffset);
 
 	std::uint32_t dwMetadataSize = 0;
-	BYTE* pBuffer;
+	char* pBuffer;
 
 	if (m_fVersion > 3.00)
 	{

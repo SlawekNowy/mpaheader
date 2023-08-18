@@ -1,6 +1,8 @@
 #pragma once
 #include "tag.hpp"
 
+#include <cstdint>
+
 class CID3V1Tag : public CTag
 {
 public:

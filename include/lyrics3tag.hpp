@@ -1,6 +1,7 @@
 #pragma once
 #include "tag.hpp"
 
+#include <cstdint>
 class CLyrics3Tag : public CTag
 {
 public:

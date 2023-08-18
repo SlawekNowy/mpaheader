@@ -20,7 +20,7 @@ CID3V2Tag* CID3V2Tag::FindTag(CMPAStream* pStream, bool bAppended, std::uint32_t
 		szID = "3DI";
 		
 	}
-	BYTE* pBuffer = pStream->ReadBytes(10, dwOffset, false);
+	char* pBuffer = pStream->ReadBytes(10, dwOffset, false);
 
 	if (memcmp(szID, pBuffer, 3) == 0)
 		return new CID3V2Tag(pStream, bAppended, dwOffset);
@@ -34,9 +34,9 @@ CID3V2Tag::CID3V2Tag(CMPAStream* pStream, bool bAppended, std::uint32_t dwOffset
 	dwOffset += 3;
 
 	// read out version info
-	BYTE* pBuffer = m_pStream->ReadBytes(3, dwOffset);
+	char* pBuffer = m_pStream->ReadBytes(3, dwOffset);
 	SetVersion(2, pBuffer[0], pBuffer[1]);
-	BYTE bFlags = pBuffer[3];
+	char bFlags = pBuffer[3];
 	/*m_bUnsynchronization = (bFlags & 0x80)?true:false;	// bit 7
 	m_bExtHeader = (bFlags & 0x40)?true:false;			// bit 6
 	m_bExperimental = (bFlags & 0x20)?true:false;		// bit 5*/

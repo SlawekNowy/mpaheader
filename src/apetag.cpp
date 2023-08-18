@@ -15,7 +15,7 @@ CAPETag *CAPETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwB
 		// stands at the end of the file (complete footer is 32 bytes)
 		dwOffset = dwEnd - 32;
 	}
-	BYTE *pBuffer = pStream->ReadBytes(8, dwOffset, false);
+	char *pBuffer = pStream->ReadBytes(8, dwOffset, false);
 
 	if (memcmp("APETAGEX", pBuffer, 8) == 0)
 		return new CAPETag(pStream, bAppended, dwOffset);

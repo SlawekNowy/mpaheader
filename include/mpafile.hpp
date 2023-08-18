@@ -4,10 +4,11 @@
 #include "mpaframe.hpp"
 #include "tags.hpp"
 
+#include <cstdint>
 class CMPAFile
 {
 public:
-	CMPAFile(LPCTSTR szFile);
+	CMPAFile(const char *szFile);
 	CMPAFile(CMPAStream *pStream);
 	~CMPAFile(void);
 

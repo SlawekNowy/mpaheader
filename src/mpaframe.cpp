@@ -103,7 +103,7 @@ bool CMPAFrame::CheckCRC() const
 	
 	// the first 2 bytes and the CRC itself are automatically skipped
 	std::uint32_t dwOffset = m_dwOffset;
-	WORD wCRC16 = CalcCRC16(m_pStream->ReadBytes(dwByteSize, dwOffset, false), dwProtectedBits);
+	std::uint16_t wCRC16 = CalcCRC16(m_pStream->ReadBytes(dwByteSize, dwOffset, false), dwProtectedBits);
 
 	// read out crc from frame (it follows frame header)
 	dwOffset += + MPA_HEADER_SIZE;
@@ -114,12 +114,12 @@ bool CMPAFrame::CheckCRC() const
 }
 
 // CRC16 check
-WORD CMPAFrame::CalcCRC16(BYTE* pBuffer, std::uint32_t dwBitSize)
+std::uint16_t CMPAFrame::CalcCRC16(char* pBuffer, std::uint32_t dwBitSize)
 {
 	std::uint32_t n;
-	WORD tmpchar, crcmask, tmpi;
+	std::uint16_t tmpchar, crcmask, tmpi;
 	crcmask = tmpchar = 0;
-	WORD crc = 0xffff;			// start with inverted value of 0
+	std::uint16_t crc = 0xffff;			// start with inverted value of 0
 
 	// start with byte 2 of header
 	for (n = 16;  n < dwBitSize;  n++)

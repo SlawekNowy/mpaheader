@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MPAEndOfFileException.h"
 
-CMPAEndOfFileException::CMPAEndOfFileException(LPCTSTR szFile) :
+CMPAEndOfFileException::CMPAEndOfFileException(const char* szFile) :
 	CMPAException(CMPAException::EndOfFile, szFile)
 {
 }

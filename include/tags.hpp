@@ -4,6 +4,7 @@
 
 #include <vector>
 
+#include <cstdint>
 #include "mpastream.hpp"
 #include "tag.hpp"
 

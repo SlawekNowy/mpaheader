@@ -4,6 +4,6 @@
 class CMPAEndOfFileException : public CMPAException
 {
 public:
-	CMPAEndOfFileException(LPCTSTR szFile);
+	CMPAEndOfFileException(const char *szFile);
 	virtual ~CMPAEndOfFileException(void);
 };

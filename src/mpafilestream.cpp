@@ -6,13 +6,13 @@
 // 1KB is inital buffersize
 const std::uint32_t CMPAFileStream::INIT_BUFFERSIZE = 1024;	
 
-CMPAFileStream::CMPAFileStream(LPCTSTR szFilename) :
+CMPAFileStream::CMPAFileStream(const char* szFilename) :
 	CMPAStream(szFilename), m_dwOffset(0)
 {
 	// open with CreateFile (no limitation of 128byte filename length, like in mmioOpen)
 	m_hFile = ::CreateFile(szFilename, GENERIC_READ, FILE_SHARE_READ, NULL, 
 										    OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	if (m_hFile == INVALID_HANDLE_VALUE)
+	if (m_hFile == INVALID_FILE*_VALUE)
 	{
 		// throw error
 		throw CMPAException(CMPAException::ErrOpenFile, szFilename, _T("CreateFile"), true);
@@ -20,7 +20,7 @@ CMPAFileStream::CMPAFileStream(LPCTSTR szFilename) :
 	Init();
 }
 
-CMPAFileStream::CMPAFileStream(LPCTSTR szFilename, HANDLE hFile) :
+CMPAFileStream::CMPAFileStream(const char* szFilename, FILE* hFile) :
 	CMPAStream(szFilename), m_hFile(hFile)
 {
 	Init();
@@ -31,7 +31,7 @@ void CMPAFileStream::Init()
 {
 	m_dwBufferSize = INIT_BUFFERSIZE;
 	// fill buffer for first time
-	m_pBuffer = new BYTE[m_dwBufferSize];
+	m_pBuffer = new char[m_dwBufferSize];
 	FillBuffer(m_dwOffset, m_dwBufferSize, false);
 }
 
@@ -64,7 +64,7 @@ void CMPAFileStream::SetPosition(std::uint32_t dwOffset) const
 }
 
 
-BYTE* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset, bool bReverse) const
+char* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset, bool bReverse) const
 {
 	// enough bytes in buffer, otherwise read from file
 	if (m_dwOffset > dwOffset || ( ((int)((m_dwOffset + m_dwBufferSize) - dwOffset)) < (int)dwSize))
@@ -75,7 +75,7 @@ BYTE* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, b
 		}
 	}
 
-	BYTE* pBuffer = m_pBuffer + (dwOffset-m_dwOffset);
+	char* pBuffer = m_pBuffer + (dwOffset-m_dwOffset);
 	if (bMoveOffset)
 		dwOffset += dwSize;
 	
@@ -102,7 +102,7 @@ bool CMPAFileStream::FillBuffer(std::uint32_t dwOffset, std::uint32_t dwSize, bo
 		delete[] m_pBuffer;
 
 		// reserve new buffer
-		m_pBuffer = new BYTE[m_dwBufferSize];
+		m_pBuffer = new char[m_dwBufferSize];
 	}	
 
 	if (bReverse)
@@ -126,7 +126,7 @@ bool CMPAFileStream::FillBuffer(std::uint32_t dwOffset, std::uint32_t dwSize, bo
 }
 
 // read from file, return number of bytes read
-std::uint32_t CMPAFileStream::Read(LPVOID pData, std::uint32_t dwOffset, std::uint32_t dwSize) const
+std::uint32_t CMPAFileStream::Read(void* pData, std::uint32_t dwOffset, std::uint32_t dwSize) const
 {
 	std::uint32_t dwBytesRead = 0;
 	

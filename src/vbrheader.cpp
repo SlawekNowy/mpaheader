@@ -7,7 +7,7 @@
 // first test with this static method, if it does exist
 CVBRHeader* CVBRHeader::FindHeader(const CMPAFrame* pFrame)
 {
-	_ASSERTE(pFrame);
+	assert(pFrame);
 	CVBRHeader* pVBRHeader = NULL;
 
 	pVBRHeader = CXINGHeader::FindHeader(pFrame);
@@ -24,7 +24,7 @@ CVBRHeader::CVBRHeader(CMPAStream* pStream, std::uint32_t dwOffset) :
 
 bool CVBRHeader::CheckID(CMPAStream* pStream, std::uint32_t dwOffset, char ch0, char ch1, char ch2, char ch3)
 {
-	BYTE* pBuffer = pStream->ReadBytes(4, dwOffset, false);
+	char* pBuffer = pStream->ReadBytes(4, dwOffset, false);
 	if (pBuffer[0] == ch0 && pBuffer[1] == ch1 && pBuffer[2] == ch2 && pBuffer[3] == ch3)
 		return true;
 	return false;

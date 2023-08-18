@@ -5,6 +5,7 @@
 #include "vbriheader.hpp"
 #include "xingheader.hpp"
 
+#include <cstdint>
 class CMPAFrame
 {
 public:
@@ -26,6 +27,6 @@ public:
 
 private:
 	static const std::uint32_t m_dwProtectedBitsLayer2[5][2];
-	static WORD CalcCRC16(BYTE *pBuffer, std::uint32_t dwSize);
+	static std::uint16_t CalcCRC16(char *pBuffer, std::uint32_t dwSize);
 	bool m_bIsLast; // true, if it is last frame
 };

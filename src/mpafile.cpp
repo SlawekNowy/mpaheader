@@ -9,7 +9,7 @@
 
 
 
-CMPAFile::CMPAFile(LPCTSTR szFile)
+CMPAFile::CMPAFile(const char* szFile)
 {
 	std::uint32_t dwOffset = 0;
 	m_pStream = new CMPAFileStream(szFile);

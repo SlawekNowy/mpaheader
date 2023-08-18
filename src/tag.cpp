@@ -1,10 +1,10 @@
-#include "StdAfx.h"
-#include ".\tag.h"
+#include "pch.hpp"
+#include <tag.hpp>
+#include "helper.hpp"
 
-CTag::CTag(CMPAStream* pStream, const char* szName, bool bAppended, std::uint32_t dwOffset, std::uint32_t dwSize):
-	m_pStream(pStream), m_bAppended(bAppended), m_dwOffset(dwOffset), m_dwSize(dwSize)
+CTag::CTag(CMPAStream *pStream, const char *szName, bool bAppended, std::uint32_t dwOffset, std::uint32_t dwSize) : m_pStream(pStream), m_bAppended(bAppended), m_dwOffset(dwOffset), m_dwSize(dwSize)
 {
-	m_szName = _tcsdup(szName);
+	m_szName = MPAHelper::cloneCString(szName);
 }
 
 CTag::~CTag(void)

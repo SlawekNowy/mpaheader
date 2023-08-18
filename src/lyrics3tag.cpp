@@ -1,6 +1,9 @@
-#include "StdAfx.h"
-#include ".\lyrics3tag.h"
-#include "mpaexception.h"
+#include "pch.hpp"
+#include "lyrics3tag.hpp"
+#include "mpaexception.hpp"
+
+#include <cstring>
+#include <cstdlib>
 
 CLyrics3Tag *CLyrics3Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd)
 {
@@ -9,15 +12,15 @@ CLyrics3Tag *CLyrics3Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint
 	char *pBuffer = pStream->ReadBytes(9, dwOffset, false, true);
 
 	// is it Lyrics 2 Tag
-	if (memcmp("LYRICS200", pBuffer, 9) == 0)
+	if (std::memcmp("LYRICS200", pBuffer, 9) == 0)
 		return new CLyrics3Tag(pStream, dwOffset, true);
-	else if (memcmp("LYRICSEND", pBuffer, 9) == 0)
+	else if (std::memcmp("LYRICSEND", pBuffer, 9) == 0)
 		return new CLyrics3Tag(pStream, dwOffset, false);
 
-	return NULL;
+	return nullptr;
 }
 
-CLyrics3Tag::CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVersion2) : CTag(pStream, _T("Lyrics3"), true, dwOffset)
+CLyrics3Tag::CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVersion2) : CTag(pStream, "Lyrics3", true, dwOffset)
 {
 	char *pBuffer;
 	if (bVersion2)
@@ -34,7 +37,7 @@ CLyrics3Tag::CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVers
 		szSize[6] = '\0';
 
 		// convert string to integer
-		m_dwSize = atoi(szSize);
+		m_dwSize = std::atoi(szSize);
 		m_dwOffset = dwOffset - m_dwSize;
 		m_dwSize += 6 + 9; // size must include size info and end string
 	}
@@ -46,7 +49,7 @@ CLyrics3Tag::CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVers
 		m_dwOffset -= 5100;
 		pBuffer = pStream->ReadBytes(11, m_dwOffset, false);
 
-		while (memcmp("LYRICSBEGIN", pBuffer, 11) != 0)
+		while (std::memcmp("LYRICSBEGIN", pBuffer, 11) != 0)
 		{
 			if (dwOffset >= m_dwOffset)
 				throw CMPAException(CMPAException::CorruptLyricsTag);

@@ -1,57 +1,54 @@
-#include "StdAfx.h"
-#include ".\lametag.h"
+#include "pch.hpp"
+#include "lametag.hpp"
+#include <cstring>
 
+const char *CLAMETag::m_szVBRInfo[10] =
+	{
+		"Unknown",
+		"CBR",
+		"ABR",
+		"VBR1",
+		"VBR2",
+		"VBR3",
+		"VBR4",
+		"Reserved",
+		"CBR2Pass",
+		"ABR2Pass"};
 
-const char* CLAMETag::m_szVBRInfo[10] = 
-{
-	_T("Unknown"),
-	_T("CBR"),
-	_T("ABR"),
-	_T("VBR1"),
-	_T("VBR2"),
-	_T("VBR3"),
-	_T("VBR4"),
-	_T("Reserved"),
-	_T("CBR2Pass"),
-	_T("ABR2Pass")
-};
-
-
-CLAMETag* CLAMETag::FindTag(CMPAStream* pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd)
+CLAMETag *CLAMETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd)
 {
 	// check for LAME Tag extension (always 120 bytes after XING ID)
 	std::uint32_t dwOffset = dwBegin + 120;
 
-	char* pBuffer = pStream->ReadBytes(9, dwOffset, false);
-	if (memcmp(pBuffer, "LAME", 4) == 0)
+	char *pBuffer = pStream->ReadBytes(9, dwOffset, false);
+	if (std::memcmp(pBuffer, "LAME", 4) == 0)
 		return new CLAMETag(pStream, bAppended, dwOffset);
 
-	return NULL;
+	return nullptr;
 }
 
-CLAMETag::CLAMETag(CMPAStream* pStream, bool bAppended, std::uint32_t dwOffset) :
-	CTag(pStream, _T("LAME"), bAppended, dwOffset)
+CLAMETag::CLAMETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) : CTag(pStream, "LAME", bAppended, dwOffset)
 {
-	char* pBuffer = pStream->ReadBytes(20, dwOffset, false);
+	char *pBuffer = pStream->ReadBytes(20, dwOffset, false);
 
-	std::string strVersion = std::string((char*)pBuffer+4, 4);
-	m_fVersion = (float)_tstof(strVersion);
-	
+	std::string strVersion = std::string((char *)pBuffer + 4, 4);
+	m_fVersion = (float)std::atof(strVersion.c_str());
+
 	// LAME prior to 3.90 writes only a 20 byte encoder string
 	if (m_fVersion < 3.90)
 	{
 		m_bSimpleTag = true;
-		m_strEncoder = std::string((char*)pBuffer, 20);
+		m_strEncoder = std::string((char *)pBuffer, 20);
 	}
 	else
 	{
 		m_bSimpleTag = false;
-		m_strEncoder = std::string((char*)pBuffer, 9);
+		m_strEncoder = std::string((char *)pBuffer, 9);
 		dwOffset += 9;
 
 		// cut off last period
 		if (m_strEncoder[8] == '.')
-			m_strEncoder.Delete(8);
+			m_strEncoder.erase(8);
 
 		// version information
 		char bInfoAndVBR = *(pStream->ReadBytes(1, dwOffset));
@@ -76,7 +73,7 @@ CLAMETag::CLAMETag(CMPAStream* pStream, bool bAppended, std::uint32_t dwOffset) 
 
 		// average bitrate for ABR, bitrate for CBR and minimal bitrat for VBR [in kbps]
 		// 255 means 255 kbps or more
-		m_bBitrate = *(pStream->ReadBytes(1, dwOffset)); 
+		m_bBitrate = *(pStream->ReadBytes(1, dwOffset));
 	}
 }
 
@@ -105,7 +102,7 @@ bool CLAMETag::IsCBR() const
 	return false;
 }
 
-const char* CLAMETag::GetVBRInfo() const
+const char *CLAMETag::GetVBRInfo() const
 {
 	if (m_bVBRInfo > 9)
 		return m_szVBRInfo[0];

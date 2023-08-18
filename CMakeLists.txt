@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.16)
 
 project(mpaheader)
 
@@ -19,9 +19,12 @@ set (INCLUDES
 "include/vbriheader.hpp"
 "include/mpaframe.hpp"
 "include/mpaexception.hpp"
-"include/mpafilestream.hpp"
 "include/mpaendoffileexception.hpp"
+"src/helper.hpp"
+"src/pch.hpp"
 )
+
+
 
 set (SOURCES
 "src/id3v2tag.cpp"
@@ -41,8 +44,23 @@ set (SOURCES
 "src/mpafile.cpp"
 "src/vbrheader.cpp"
 "src/mpaframe.cpp"
-"src/mpafilestream.cpp"
+"src/helper.cpp"
 )
 
-add_library(mpaheader ${SOURCES} ${INCLUDES})
+if(WIN32)
+set(INCLUDES ${INCLUDES}
+"src/mpafilestream_win32.hpp")
+set(SOURCES ${SOURCES}
+"src/mpafilestream_win32.cpp")
+endif()
+
+if(UNIX)
+set(INCLUDES ${INCLUDES}
+"src/mpafilestream_posix.hpp")
+set(SOURCES ${SOURCES}
+"src/mpafilestream_posix.cpp")
+endif()
+
+add_library(mpaheader SHARED ${SOURCES} ${INCLUDES})
 target_include_directories(mpaheader PUBLIC "include")
+target_precompile_headers(mpaheader PRIVATE "src/pch.hpp")

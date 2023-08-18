@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LYRICS3TAG_E2CD8E1D_634D_4982_BED5_E184A76A238D
+#define LYRICS3TAG_E2CD8E1D_634D_4982_BED5_E184A76A238D
 #include "tag.hpp"
 
 #include <cstdint>
@@ -11,3 +12,5 @@ public:
 private:
 	CLyrics3Tag(CMPAStream *pStream, std::uint32_t dwOffset, bool bVersion2);
 };
+
+#endif /* LYRICS3TAG_E2CD8E1D_634D_4982_BED5_E184A76A238D */

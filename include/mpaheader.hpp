@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MPAHEADER_D81F250B_BC1E_4921_97B5_E6DDED55D9E2
+#define MPAHEADER_D81F250B_BC1E_4921_97B5_E6DDED55D9E2
 #include "mpastream.hpp"
 
 #include <cstdint>
@@ -93,3 +94,5 @@ public:
 	bool m_bCRC;
 	char m_ModeExt;
 };
+
+#endif /* MPAHEADER_D81F250B_BC1E_4921_97B5_E6DDED55D9E2 */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LAMETAG_CB3CDFFB_984C_4641_90AC_B62F8CE52D70
+#define LAMETAG_CB3CDFFB_984C_4641_90AC_B62F8CE52D70
 #include "tag.hpp"
 
 #include <cstdint>
@@ -6,7 +7,7 @@
 class CLAMETag : public CTag
 {
 public:
-	static CLAMETag *CLAMETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);
+	static CLAMETag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);
 	~CLAMETag(void);
 
 	std::string m_strEncoder;
@@ -27,3 +28,5 @@ private:
 	bool m_bSimpleTag;
 	static const char *m_szVBRInfo[10];
 };
+
+#endif /* LAMETAG_CB3CDFFB_984C_4641_90AC_B62F8CE52D70 */

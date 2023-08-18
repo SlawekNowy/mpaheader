@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TAG_AA44F1A4_E34F_411D_B471_A42EF1210830
+#define TAG_AA44F1A4_E34F_411D_B471_A42EF1210830
 #include "mpastream.hpp"
 
 #include <cstdint>
@@ -26,3 +27,5 @@ protected:
 
 	void SetVersion(char bVersion1, char bVersion2 = 0, char bVersion3 = 0);
 };
+
+#endif /* TAG_AA44F1A4_E34F_411D_B471_A42EF1210830 */

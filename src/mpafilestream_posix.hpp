@@ -1,17 +1,21 @@
-#pragma once
-#include "mpastream.hpp"
+#ifndef MPAFILESTREAM_POSIX_C66170D4_7C80_47A6_BDD6_68CC4E90D77F
+#define MPAFILESTREAM_POSIX_C66170D4_7C80_47A6_BDD6_68CC4E90D77F
+#include <mpastream.hpp>
 
 #include <cstdint>
-class CMPAFileStream : public CMPAStream
+
+typedef int FD_INT;
+
+class CMPAFileStreamPOSIX : public CMPAStream
 {
 public:
-	CMPAFileStream(const char *szFilename);
-	CMPAFileStream(const char *szFilename, FILE *hFile);
-	virtual ~CMPAFileStream(void);
+	CMPAFileStreamPOSIX(const char *szFilename);
+	CMPAFileStreamPOSIX(const char *szFilename, FD_INT hFile);
+	virtual ~CMPAFileStreamPOSIX(void);
 
 private:
 	static const std::uint32_t INIT_BUFFERSIZE;
-	FILE *m_hFile;
+	FD_INT m_fdFile;
 	bool m_bMustReleaseFile;
 
 	// concerning read-buffer
@@ -30,3 +34,5 @@ protected:
 	virtual char *ReadBytes(std::uint32_t dwSize, std::uint32_t &dwOffset, bool bMoveOffset = true, bool bReverse = false) const;
 	virtual std::uint32_t GetSize() const;
 };
+
+#endif /* MPAFILESTREAM_POSIX_C66170D4_7C80_47A6_BDD6_68CC4E90D77F */

@@ -1,23 +1,26 @@
-#include "stdafx.h"
-#include ".\mpaexception.h"
+#include "pch.hpp"
+#include <mpaexception.hpp>
+#include <cstdio>
 
+#include <cerrno>  //for errno
+#include <clocale> //for setlocale
 /// CMPAException: exception class
 //////////////////////////////////////////////
 
-CMPAException::CMPAException(ErrorIDs ErrorID, const char* szFile, const char* szFunction, bool bGetLastError) :
-	m_ErrorID(ErrorID), m_bGetLastError(bGetLastError), m_szErrorMsg(NULL)
+using MPAHelper::cloneCString;
+CMPAException::CMPAException(ErrorIDs ErrorID, const char *szFile, const char *szFunction, bool bGetLastError) : m_ErrorID(ErrorID), m_bGetLastError(bGetLastError), m_szErrorMsg(NULL)
 {
-	m_szFile = _tcsdup(szFile);
-	m_szFunction = _tcsdup(szFunction);
+	m_szFile = cloneCString(szFile);
+	m_szFunction = cloneCString(szFunction);
 }
 
 // copy constructor (necessary for exception throwing without pointers)
-CMPAException::CMPAException(const CMPAException& Source)
+CMPAException::CMPAException(const CMPAException &Source)
 {
 	m_ErrorID = Source.m_ErrorID;
 	m_bGetLastError = Source.m_bGetLastError;
-	m_szFile = _tcsdup(Source.m_szFile);
-	m_szFunction = _tcsdup(Source.m_szFunction);
+	m_szFile = cloneCString(Source.m_szFile);
+	m_szFunction = cloneCString(Source.m_szFunction);
 }
 
 // destructor
@@ -32,70 +35,75 @@ CMPAException::~CMPAException()
 }
 
 // should be in resource file for multi language applications
-const char* CMPAException::m_szErrors[CMPAException::NumIDs] = 
-{
-	_T("Can't open the file."), 
-	_T("Can't set file position."),
-	_T("Can't read from file."),
-	_T("No VBR Header found."),
-	_T("Incomplete VBR Header."),
-	_T("No frame found within tolerance range."),
-	_T("No frame found before end of file was reached."),
-	_T("Header corrupt"),
-	_T("Free Bitrate currently not supported"),
-	_T("Incompatible Header"),
-	_T("Corrupt Lyrics3 Tag")
-};
+const char *CMPAException::m_szErrors[CMPAException::NumIDs] =
+	{
+		"Can't open the file.",
+		"Can't set file position.",
+		"Can't read from file.",
+		"No VBR Header found.",
+		"Incomplete VBR Header.",
+		"No frame found within tolerance range.",
+		"No frame found before end of file was reached.",
+		"Header corrupt",
+		"Free Bitrate currently not supported",
+		"Incompatible Header",
+		"Corrupt Lyrics3 Tag"};
 
-#define MAX_ERR_LENGTH 256
+#define MAX_ERR_LENGTH 4096
 void CMPAException::ShowError()
 {
-	const char* pErrorMsg = GetErrorDescription();
+	const char *pErrorMsg = GetErrorDescription();
 	// show error message
-	::MessageBox (NULL, pErrorMsg, _T("MPAFile Error"), MB_OK);
+	//::MessageBox(NULL, pErrorMsg, "MPAFile Error", MB_OK);
+	// no GUI outside of windows and mac. Log to stderr instead.
+	std::fprintf(stderr, "MPAFile Error: {}", pErrorMsg);
 }
 
-const char* CMPAException::GetErrorDescription()
+const char *CMPAException::GetErrorDescription()
 {
 	if (!m_szErrorMsg)
 	{
-		m_szErrorMsg = new TCHAR[MAX_ERR_LENGTH];
+		m_szErrorMsg = new char[MAX_ERR_LENGTH];
 		m_szErrorMsg[0] = '\0';
-		TCHAR szHelp[MAX_ERR_LENGTH];
+		char szHelp[MAX_ERR_LENGTH];
 
 		// this is not buffer-overflow-proof!
 		if (m_szFunction)
 		{
-			_stprintf_s(szHelp, MAX_ERR_LENGTH, _T("%s: "), m_szFunction);
-			_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, szHelp );
+			snprintf(szHelp, MAX_ERR_LENGTH, "%s: ", m_szFunction);
+			strncat(m_szErrorMsg, szHelp, MAX_ERR_LENGTH);
 		}
 		if (m_szFile)
 		{
-			_stprintf_s(szHelp, MAX_ERR_LENGTH, _T("'%s'\n"), m_szFile);
-			_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, szHelp);
+			snprintf(szHelp, MAX_ERR_LENGTH, "'%s'\n", m_szFile);
+			strncat(m_szErrorMsg, szHelp, MAX_ERR_LENGTH);
 		}
-		_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, m_szErrors[m_ErrorID]);
+		strncat(m_szErrorMsg, m_szErrors[m_ErrorID], MAX_ERR_LENGTH);
 
 		if (m_bGetLastError)
 		{
 			// get error message of last system error id
-			void* pMsgBuf;
+			/*void *pMsgBuf;
 			if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-								NULL,
-								GetLastError(),
-								MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-								(char*) &pMsgBuf,
-								0,
-								NULL))
+							  NULL,
+							  GetLastError(),
+							  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+							  (char *)&pMsgBuf,
+							  0,
+							  NULL))
 			{
-				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, _T("\n"));
-				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, (const char*)pMsgBuf);
+				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, "\n");
+				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, (const char *)pMsgBuf);
 				LocalFree(pMsgBuf);
-			}
+			} */
+			setlocale(LC_MESSAGES, "C");
+			strncat(m_szErrorMsg, "\n", MAX_ERR_LENGTH);
+			char *strErrorMsg = std::strerror(errno);
+			strncat(m_szErrorMsg, strErrorMsg, MAX_ERR_LENGTH);
 		}
 
 		// make sure string is null-terminated
-		m_szErrorMsg[MAX_ERR_LENGTH-1] = '\0';
+		m_szErrorMsg[MAX_ERR_LENGTH - 1] = '\0';
 	}
 	return m_szErrorMsg;
 }

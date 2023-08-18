@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MPASTREAM_C235D32D_77DC_423D_9F80_002478D39C47
+#define MPASTREAM_C235D32D_77DC_423D_9F80_002478D39C47
 
 #include <cstdint>
 class CMPAStream
@@ -18,3 +19,5 @@ protected:
 
 	CMPAStream(const char *szFilename);
 };
+
+#endif /* MPASTREAM_C235D32D_77DC_423D_9F80_002478D39C47 */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VBRIHEADER_EE1B19A6_BFD4_4317_BA8B_906606EF4301
+#define VBRIHEADER_EE1B19A6_BFD4_4317_BA8B_906606EF4301
 #include "mpaframe.hpp"
 #include "vbrheader.hpp"
 
@@ -23,3 +24,5 @@ public:
 private:
 	std::uint32_t m_dwLengthSec;
 };
+
+#endif /* VBRIHEADER_EE1B19A6_BFD4_4317_BA8B_906606EF4301 */

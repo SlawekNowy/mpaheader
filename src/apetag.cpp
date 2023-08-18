@@ -1,6 +1,6 @@
-#include "StdAfx.h"
-#include ".\apetag.h"
-
+#include "pch.hpp"
+#include <apetag.hpp>
+#include <cstring>
 CAPETag *CAPETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd)
 {
 	std::uint32_t dwOffset;
@@ -17,12 +17,12 @@ CAPETag *CAPETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwB
 	}
 	char *pBuffer = pStream->ReadBytes(8, dwOffset, false);
 
-	if (memcmp("APETAGEX", pBuffer, 8) == 0)
+	if (std::memcmp("APETAGEX", pBuffer, 8) == 0)
 		return new CAPETag(pStream, bAppended, dwOffset);
-	return NULL;
+	return nullptr;
 }
 
-CAPETag::CAPETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) : CTag(pStream, _T("APE"), bAppended, dwOffset)
+CAPETag::CAPETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) : CTag(pStream, "APE", bAppended, dwOffset)
 {
 	dwOffset += 8;
 	std::uint32_t dwVersion = pStream->ReadLEValue(4, dwOffset);

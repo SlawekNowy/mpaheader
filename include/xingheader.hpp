@@ -1,4 +1,5 @@
-#pragma once
+#ifndef XINGHEADER_E9AEF990_2673_41C6_94CC_24C2CEC0FAD1
+#define XINGHEADER_E9AEF990_2673_41C6_94CC_24C2CEC0FAD1
 #include "mpaframe.hpp"
 #include "vbrheader.hpp"
 #include "lametag.hpp"
@@ -15,3 +16,5 @@ public:
 
 	CLAMETag *m_pLAMETag;
 };
+
+#endif /* XINGHEADER_E9AEF990_2673_41C6_94CC_24C2CEC0FAD1 */

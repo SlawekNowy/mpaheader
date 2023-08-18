@@ -1,6 +1,7 @@
-#pragma once
+#ifndef MPAFILE_CBAE6D14_3783_480F_997A_50E7D95AF04E
+#define MPAFILE_CBAE6D14_3783_480F_997A_50E7D95AF04E
 #include "mpaexception.hpp"
-#include "mpafilestream.hpp"
+// #include "mpafilestream.hpp"
 #include "mpaframe.hpp"
 #include "tags.hpp"
 
@@ -39,3 +40,5 @@ public:
 	CMPAFrame *m_pFirstFrame; // always first frame
 	CVBRHeader *m_pVBRHeader; // XING or VBRI or NULL
 };
+
+#endif /* MPAFILE_CBAE6D14_3783_480F_997A_50E7D95AF04E */

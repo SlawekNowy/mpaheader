@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ID3V1TAG_F66ACE33_8231_4ADE_B5D1_3F95E823D428
+#define ID3V1TAG_F66ACE33_8231_4ADE_B5D1_3F95E823D428
 #include "tag.hpp"
 
 #include <cstdint>
@@ -12,3 +13,5 @@ public:
 private:
 	CID3V1Tag(CMPAStream *pStream, std::uint32_t dwOffset);
 };
+
+#endif /* ID3V1TAG_F66ACE33_8231_4ADE_B5D1_3F95E823D428 */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TAGS_CA9021D7_1B84_4CBD_978F_5938AE419DE2
+#define TAGS_CA9021D7_1B84_4CBD_978F_5938AE419DE2
 
 #define NUMBER_OF_ELEMENTS(X) (sizeof X / sizeof X[0])
 
@@ -49,3 +50,5 @@ bool CTags::FindTag(TagClass *&pTag) const
 	}
 	return false;
 }
+
+#endif /* TAGS_CA9021D7_1B84_4CBD_978F_5938AE419DE2 */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MPAFRAME_AC67800A_7ED8_4437_A5B9_FB7006B0F5F0
+#define MPAFRAME_AC67800A_7ED8_4437_A5B9_FB7006B0F5F0
 #include "mpastream.hpp"
 #include "mpaheader.hpp"
 #include "vbrheader.hpp"
@@ -30,3 +31,5 @@ private:
 	static std::uint16_t CalcCRC16(char *pBuffer, std::uint32_t dwSize);
 	bool m_bIsLast; // true, if it is last frame
 };
+
+#endif /* MPAFRAME_AC67800A_7ED8_4437_A5B9_FB7006B0F5F0 */

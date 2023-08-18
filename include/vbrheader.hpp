@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VBRHEADER_AC48F8C4_4682_4F74_B67F_E6752D7F8A9B
+#define VBRHEADER_AC48F8C4_4682_4F74_B67F_E6752D7F8A9B
 
 #include <cstdint>
 // class CMPAFrame must be included first and must be known here
@@ -27,3 +28,5 @@ public:
 	int *m_pnToc;				 // TOC points for seeking (must be freed)
 	std::uint32_t m_dwTableSize; // size of table (number of entries)
 };
+
+#endif /* VBRHEADER_AC48F8C4_4682_4F74_B67F_E6752D7F8A9B */

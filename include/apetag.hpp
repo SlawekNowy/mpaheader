@@ -1,16 +1,16 @@
-#ifndef __MPAHEADER_APETAG_HPP__
-#define __MPAHEADER_APETAG_HPP__
-#pragma once
+#ifndef APETAG_B6E0395E_A637_47A9_9C53_29718CA0F58B
+#define APETAG_B6E0395E_A637_47A9_9C53_29718CA0F58B
 #include "tag.hpp"
 #include <cstdint>
 
 class CAPETag : public CTag
 {
 public:
-	static CAPETag *CAPETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);
+	static CAPETag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);
 	~CAPETag(void);
 
 private:
 	CAPETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset);
 };
-#endif
+
+#endif /* APETAG_B6E0395E_A637_47A9_9C53_29718CA0F58B */

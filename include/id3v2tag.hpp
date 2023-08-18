@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ID3V2TAG_D153286B_E881_43A3_BD5E_3D66AECBFFDA
+#define ID3V2TAG_D153286B_E881_43A3_BD5E_3D66AECBFFDA
 #include "tag.hpp"
 
 #include <cstdint>
@@ -12,3 +13,5 @@ private:
 	CID3V2Tag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset);
 	static std::uint32_t GetSynchsafeInteger(std::uint32_t dwValue);
 };
+
+#endif /* ID3V2TAG_D153286B_E881_43A3_BD5E_3D66AECBFFDA */

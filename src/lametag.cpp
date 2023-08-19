@@ -57,7 +57,7 @@ CLAMETag::CLAMETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) 
 		m_bRevision = bInfoAndVBR & 0xF0;
 		// invalid value
 		if (m_bRevision == 15)
-			throw NULL;
+			throw nullptr;
 
 		// VBR info in 4 LSB
 		m_bVBRInfo = bInfoAndVBR & 0x0F;

@@ -14,12 +14,18 @@
 
 CMPAFile::CMPAFile(const char *szFile)
 {
-	std::uint32_t dwOffset = 0;
 #ifdef _WIN32
-	m_pStream = new CMPAFileStreamWIN32(szFile);
+	CMPAFile(new CMPAFileStreamWIN32(szFile));
 #else
-	m_pStream = new CMPAFileStreamPOSIX(szFile);
+	CMPAFile(new CMPAFileStreamPOSIX(szFile));
 #endif
+}
+
+CMPAFile::CMPAFile(CMPAStream *stream)
+{
+	std::uint32_t dwOffset = 0;
+
+	m_pStream = stream;
 	m_pTags = new CTags(m_pStream);
 
 	// find first valid MPEG frame

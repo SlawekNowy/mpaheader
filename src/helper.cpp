@@ -1,12 +1,16 @@
 #include "helper.hpp"
 #include <cstring>
-namespace MPAHeader
+
+char *MPAHelper::cloneCString(const char *origStr)
 {
-    char *strdup(const char *origStr)
-    {
-        int strLength = std::strlen(origStr);
-        char *destStr = new char[strLength + 1];
-        std::strcpy(destStr, origStr);
-        return destStr;
-    }
+	if (origStr == nullptr)
+		return nullptr;
+
+	size_t len = std::strlen(origStr) + 1;
+	char* newStr = static_cast<char*>(std::malloc(len));
+
+	if (newStr != nullptr)
+		std::memcpy(newStr, origStr, len);
+
+	return newStr;
 }

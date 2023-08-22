@@ -47,20 +47,6 @@ set (SOURCES
 "src/helper.cpp"
 )
 
-if(WIN32)
-set(INCLUDES ${INCLUDES}
-"src/mpafilestream_win32.hpp")
-set(SOURCES ${SOURCES}
-"src/mpafilestream_win32.cpp")
-endif()
-
-if(UNIX)
-set(INCLUDES ${INCLUDES}
-"src/mpafilestream_posix.hpp")
-set(SOURCES ${SOURCES}
-"src/mpafilestream_posix.cpp")
-endif()
-
 add_library(mpaheader SHARED ${SOURCES} ${INCLUDES})
 target_compile_definitions(mpaheader PUBLIC MPAH_DLL)
 target_include_directories(mpaheader PUBLIC "include")

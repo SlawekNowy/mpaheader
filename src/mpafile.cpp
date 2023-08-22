@@ -3,23 +3,8 @@
 #include <mpaexception.hpp>
 #include <mpafile.hpp>
 
-#ifdef _WIN32
-#include "mpafilestream_win32.hpp"
-#else
-#include "mpafilestream_posix.hpp"
-#endif
-
 /// CMPAFile
 //////////////////////////////////////////
-
-CMPAFile::CMPAFile(const char *szFile)
-{
-#ifdef _WIN32
-	CMPAFile(new CMPAFileStreamWIN32(szFile));
-#else
-	CMPAFile(new CMPAFileStreamPOSIX(szFile));
-#endif
-}
 
 CMPAFile::CMPAFile(CMPAStream *stream)
 {

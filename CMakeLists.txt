@@ -20,6 +20,8 @@ set (INCLUDES
 "include/mpaframe.hpp"
 "include/mpaexception.hpp"
 "include/mpaendoffileexception.hpp"
+"include/mpafilestream.hpp"
+"include/mpadefinitions.hpp"
 "src/helper.hpp"
 "src/pch.hpp"
 )
@@ -37,6 +39,7 @@ set (SOURCES
 "src/vbriheader.cpp"
 "src/tag.cpp"
 "src/mpaendoffileexception.cpp"
+"src/mpafilestream.cpp"
 "src/musicmatchtag.cpp"
 "src/apetag.cpp"
 "src/xingheader.cpp"

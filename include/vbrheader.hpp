@@ -1,11 +1,12 @@
 #ifndef VBRHEADER_AC48F8C4_4682_4F74_B67F_E6752D7F8A9B
 #define VBRHEADER_AC48F8C4_4682_4F74_B67F_E6752D7F8A9B
 
+#include "mpadefinitions.hpp"
 #include <cstdint>
 // class CMPAFrame must be included first and must be known here
 class CMPAFrame;
 
-class CVBRHeader
+class DLLMPAH CVBRHeader
 {
 public:
 	static CVBRHeader *FindHeader(const CMPAFrame *pFrame);

@@ -1,9 +1,10 @@
 #ifndef ID3V2TAG_D153286B_E881_43A3_BD5E_3D66AECBFFDA
 #define ID3V2TAG_D153286B_E881_43A3_BD5E_3D66AECBFFDA
+#include "mpadefinitions.hpp"
 #include "tag.hpp"
 
 #include <cstdint>
-class CID3V2Tag : public CTag
+class DLLMPAH CID3V2Tag : public CTag
 {
 public:
 	static CID3V2Tag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);

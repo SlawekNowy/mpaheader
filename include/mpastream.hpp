@@ -1,8 +1,9 @@
 #ifndef MPASTREAM_C235D32D_77DC_423D_9F80_002478D39C47
 #define MPASTREAM_C235D32D_77DC_423D_9F80_002478D39C47
 
+#include "mpadefinitions.hpp"
 #include <cstdint>
-class CMPAStream
+class DLLMPAH CMPAStream
 {
 public:
 	virtual ~CMPAStream(void);

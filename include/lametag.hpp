@@ -1,10 +1,11 @@
 #ifndef LAMETAG_CB3CDFFB_984C_4641_90AC_B62F8CE52D70
 #define LAMETAG_CB3CDFFB_984C_4641_90AC_B62F8CE52D70
+#include "mpadefinitions.hpp"
 #include "tag.hpp"
 
 #include <cstdint>
 #include <string>
-class CLAMETag : public CTag
+class DLLMPAH CLAMETag : public CTag
 {
 public:
 	static CLAMETag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);

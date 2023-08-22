@@ -9,7 +9,7 @@
 #include "mpastream.hpp"
 #include "tag.hpp"
 
-class CTags
+class DLLMPAH CTags
 {
 public:
 	CTags(CMPAStream *pStream);

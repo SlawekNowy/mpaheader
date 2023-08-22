@@ -4,7 +4,7 @@
 #include "vbrheader.hpp"
 #include "lametag.hpp"
 
-class CXINGHeader : public CVBRHeader
+class DLLMPAH CXINGHeader : public CVBRHeader
 {
 public:
 	static CXINGHeader *FindHeader(const CMPAFrame *pFrame);

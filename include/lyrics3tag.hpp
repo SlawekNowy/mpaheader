@@ -1,9 +1,10 @@
 #ifndef LYRICS3TAG_E2CD8E1D_634D_4982_BED5_E184A76A238D
 #define LYRICS3TAG_E2CD8E1D_634D_4982_BED5_E184A76A238D
+#include "mpadefinitions.hpp"
 #include "tag.hpp"
 
 #include <cstdint>
-class CLyrics3Tag : public CTag
+class DLLMPAH CLyrics3Tag : public CTag
 {
 public:
 	static CLyrics3Tag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);

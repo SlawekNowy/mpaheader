@@ -3,7 +3,8 @@
 
 #ifndef MPAEXCEPTION_BF58A528_6C6F_41FB_8986_C9EE61D1BB3F
 #define MPAEXCEPTION_BF58A528_6C6F_41FB_8986_C9EE61D1BB3F
-class CMPAException
+#include "mpadefinitions.hpp"
+class DLLMPAH CMPAException
 {
 public:
 	enum ErrorIDs

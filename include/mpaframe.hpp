@@ -7,7 +7,7 @@
 #include "xingheader.hpp"
 
 #include <cstdint>
-class CMPAFrame
+class DLLMPAH CMPAFrame
 {
 public:
 	CMPAFrame(CMPAStream *pStream, std::uint32_t &dwOffset, bool bFindSubsequentFrame, bool bExactOffset, bool bReverse, CMPAHeader *pCompareHeader);

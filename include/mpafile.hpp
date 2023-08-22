@@ -6,10 +6,9 @@
 #include "tags.hpp"
 
 #include <cstdint>
-class CMPAFile
+class DLLMPAH CMPAFile
 {
 public:
-	CMPAFile(const char *szFile);
 	CMPAFile(CMPAStream *pStream);
 	~CMPAFile(void);
 

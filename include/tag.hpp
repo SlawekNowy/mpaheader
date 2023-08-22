@@ -3,7 +3,7 @@
 #include "mpastream.hpp"
 
 #include <cstdint>
-class CTag
+class DLLMPAH CTag
 {
 public:
 	std::uint32_t GetOffset() const { return m_dwOffset; };

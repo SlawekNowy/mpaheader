@@ -3,7 +3,7 @@
 #include "tag.hpp"
 
 #include <cstdint>
-class CMusicMatchTag : public CTag
+class DLLMPAH CMusicMatchTag : public CTag
 {
 public:
 	static CMusicMatchTag *FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t dwBegin, std::uint32_t dwEnd);

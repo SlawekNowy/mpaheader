@@ -62,5 +62,6 @@ set(SOURCES ${SOURCES}
 endif()
 
 add_library(mpaheader SHARED ${SOURCES} ${INCLUDES})
+target_compile_definitions(mpaheader PUBLIC MPAH_DLL)
 target_include_directories(mpaheader PUBLIC "include")
 target_precompile_headers(mpaheader PRIVATE "src/pch.hpp")

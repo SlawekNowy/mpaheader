@@ -3,7 +3,7 @@
 #include "mpaframe.hpp"
 #include "vbrheader.hpp"
 
-class CVBRIHeader : public CVBRHeader
+class DLLMPAH CVBRIHeader : public CVBRHeader
 {
 public:
 	static CVBRIHeader *FindHeader(const CMPAFrame *pFrame);

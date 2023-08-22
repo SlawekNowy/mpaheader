@@ -6,7 +6,7 @@
 #define MPA_HEADER_SIZE 4 // MPEG-Audio Header Size 32bit
 #define MAXTIMESREAD 5
 
-class CMPAHeader
+class DLLMPAH CMPAHeader
 {
 public:
 	CMPAHeader(CMPAStream *pStream, std::uint32_t &dwOffset, bool bExactOffset, bool bReverse, CMPAHeader *pCompareHeader);

@@ -2,6 +2,11 @@
 #include <mpaexception.hpp>
 #include <cstdio>
 
+#ifdef _WIN32
+#include <Windows.h>
+#include <atlstr.h>
+#endif
+
 #include <cerrno>  //for errno
 #include <clocale> //for setlocale
 /// CMPAException: exception class
@@ -83,7 +88,8 @@ const char *CMPAException::GetErrorDescription()
 		if (m_bGetLastError)
 		{
 			// get error message of last system error id
-			/*void *pMsgBuf;
+#ifdef _WIN32
+			void *pMsgBuf;
 			if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 							  NULL,
 							  GetLastError(),
@@ -95,11 +101,13 @@ const char *CMPAException::GetErrorDescription()
 				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, "\n");
 				_tcscat_s(m_szErrorMsg, MAX_ERR_LENGTH, (const char *)pMsgBuf);
 				LocalFree(pMsgBuf);
-			} */
+			}
+#else
 			setlocale(LC_MESSAGES, "C");
 			strncat(m_szErrorMsg, "\n", MAX_ERR_LENGTH);
 			char *strErrorMsg = std::strerror(errno);
 			strncat(m_szErrorMsg, strErrorMsg, MAX_ERR_LENGTH);
+#endif
 		}
 
 		// make sure string is null-terminated

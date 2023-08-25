@@ -105,8 +105,6 @@ std::uint32_t CMPAFileStream::Read(void *pData, std::uint32_t dwOffset, std::uin
 	SetPosition(dwOffset);
 
 	dwBytesRead = m_file->Read(pData, dwSize);
-	if (dwBytesRead != dwSize)
-		throw CMPAException(CMPAException::ErrReadFile, m_szFile, "ReadFile", true);
 	
 	return dwBytesRead;
 }

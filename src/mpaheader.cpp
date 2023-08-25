@@ -229,7 +229,7 @@ CMPAHeader::CMPAHeader(CMPAStream *pStream, std::uint32_t &dwOffset, bool bExact
 
 	// is new offset within valid range?
 	bool bHeaderFound = false;
-	while (char *pHeader = pStream->ReadBytes(4, dwOffset, false, bReverse))
+	while (auto *pHeader = pStream->ReadBytes(4, dwOffset, false, bReverse))
 	{
 		// sync bytes found?
 		// for performance reasons check already that it is not data within an empty frame (all bits set)
@@ -304,7 +304,7 @@ CMPAHeader::CMPAHeader(CMPAStream *pStream, std::uint32_t &dwOffset, bool bExact
 
 // the bit information refers to bit 0 as the most significant bit (MSB) of Byte 0
 // decodes the header in pHeader
-void CMPAHeader::Init(char *pHeader, const char *szFilename)
+void CMPAHeader::Init(CMPAByte *pHeader, const char *szFilename)
 {
 	// get MPEG version [bit 11,12]
 	m_Version = (MPAVersion)((pHeader[1] >> 3) & 0x03); // mask only the rightmost 2 bits
@@ -325,7 +325,7 @@ void CMPAHeader::Init(char *pHeader, const char *szFilename)
 	m_bCRC = !((pHeader[1]) & 0x01);
 
 	// bitrate [bit 16..19]
-	char bBitrateIndex = (char)((pHeader[2] >> 4) & 0x0F);
+	CMPAByte bBitrateIndex = (CMPAByte)((pHeader[2] >> 4) & 0x0F);
 	if (bBitrateIndex == 0x0F) // all bits set is reserved
 		throw CMPAException(CMPAException::HeaderCorrupt);
 	m_dwBitrate = m_dwBitrates[m_bLSF][m_Layer][bBitrateIndex] * 1000; // convert from kbit to bit
@@ -334,7 +334,7 @@ void CMPAHeader::Init(char *pHeader, const char *szFilename)
 		throw CMPAException(CMPAException::FreeBitrate, szFilename);
 
 	// sampling rate [bit 20,21]
-	char bIndex = (char)((pHeader[2] >> 2) & 0x03);
+	CMPAByte bIndex = (CMPAByte)((pHeader[2] >> 2) & 0x03);
 	if (bIndex == 0x03) // all bits set is reserved
 		throw CMPAException(CMPAException::HeaderCorrupt, szFilename);
 	m_dwSamplesPerSec = m_dwSamplingRates[m_Version][bIndex];
@@ -351,7 +351,7 @@ void CMPAHeader::Init(char *pHeader, const char *szFilename)
 	m_ChannelMode = (ChannelMode)((pHeader[3] >> 6) & 0x03);
 
 	// mode extension [bit 26,27]
-	m_ModeExt = (char)((pHeader[3] >> 4) & 0x03);
+	m_ModeExt = (CMPAByte)((pHeader[3] >> 4) & 0x03);
 
 	// determine the bound for intensity stereo
 	if (m_ChannelMode == JointStereo)

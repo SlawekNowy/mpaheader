@@ -20,7 +20,7 @@ CLAMETag *CLAMETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t d
 	// check for LAME Tag extension (always 120 bytes after XING ID)
 	std::uint32_t dwOffset = dwBegin + 120;
 
-	char *pBuffer = pStream->ReadBytes(9, dwOffset, false);
+	auto *pBuffer = pStream->ReadBytes(9, dwOffset, false);
 	if (std::memcmp(pBuffer, "LAME", 4) == 0)
 		return new CLAMETag(pStream, bAppended, dwOffset);
 
@@ -29,7 +29,7 @@ CLAMETag *CLAMETag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t d
 
 CLAMETag::CLAMETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) : CTag(pStream, "LAME", bAppended, dwOffset)
 {
-	char *pBuffer = pStream->ReadBytes(20, dwOffset, false);
+	auto *pBuffer = pStream->ReadBytes(20, dwOffset, false);
 
 	std::string strVersion = std::string((char *)pBuffer + 4, 4);
 	m_fVersion = (float)std::atof(strVersion.c_str());
@@ -51,7 +51,7 @@ CLAMETag::CLAMETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset) 
 			m_strEncoder.erase(8);
 
 		// version information
-		char bInfoAndVBR = *(pStream->ReadBytes(1, dwOffset));
+		CMPAByte bInfoAndVBR = *(pStream->ReadBytes(1, dwOffset));
 
 		// revision info in 4 MSB
 		m_bRevision = bInfoAndVBR & 0xF0;

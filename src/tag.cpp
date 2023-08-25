@@ -12,7 +12,7 @@ CTag::~CTag(void)
 	free(m_szName);
 }
 
-void CTag::SetVersion(char bVersion1, char bVersion2, char bVersion3)
+void CTag::SetVersion(CMPAByte bVersion1, CMPAByte bVersion2, CMPAByte bVersion3)
 {
 	// only values between 0 and 9 are displayed correctly
 	m_fVersion = bVersion1;

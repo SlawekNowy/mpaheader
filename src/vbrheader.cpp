@@ -24,7 +24,7 @@ CVBRHeader::CVBRHeader(CMPAStream *pStream, std::uint32_t dwOffset) : m_pStream(
 
 bool CVBRHeader::CheckID(CMPAStream *pStream, std::uint32_t dwOffset, char ch0, char ch1, char ch2, char ch3)
 {
-	char *pBuffer = pStream->ReadBytes(4, dwOffset, false);
+	auto *pBuffer = pStream->ReadBytes(4, dwOffset, false);
 	if (pBuffer[0] == ch0 && pBuffer[1] == ch1 && pBuffer[2] == ch2 && pBuffer[3] == ch3)
 		return true;
 	return false;

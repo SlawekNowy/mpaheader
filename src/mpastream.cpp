@@ -29,7 +29,7 @@ std::uint32_t CMPAStream::ReadLEValue(std::uint32_t dwNumBytes, std::uint32_t &d
 	assert(dwNumBytes > 0);
 	assert(dwNumBytes <= 4); // max 4 byte
 
-	char *pBuffer = ReadBytes(dwNumBytes, dwOffset, bMoveOffset);
+	CMPAByte *pBuffer = ReadBytes(dwNumBytes, dwOffset, bMoveOffset);
 
 	std::uint32_t dwResult = 0;
 
@@ -50,7 +50,7 @@ std::uint32_t CMPAStream::ReadBEValue(std::uint32_t dwNumBytes, std::uint32_t &d
 	assert(dwNumBytes > 0);
 	assert(dwNumBytes <= 4); // max 4 byte
 
-	char *pBuffer = ReadBytes(dwNumBytes, dwOffset, bMoveOffset);
+	CMPAByte *pBuffer = ReadBytes(dwNumBytes, dwOffset, bMoveOffset);
 
 	std::uint32_t dwResult = 0;
 

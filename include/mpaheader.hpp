@@ -42,7 +42,7 @@ private:
 
 	bool m_bLSF; // true means lower sampling frequencies (=MPEG2/MPEG2.5)
 
-	void Init(char *pHeader, const char *szFilename);
+	void Init(CMPAByte *pHeader, const char *szFilename);
 
 public:
 	static const char *m_szLayers[];
@@ -92,7 +92,7 @@ public:
 	// flags
 	bool m_bCopyright, m_bPrivate, m_bOriginal;
 	bool m_bCRC;
-	char m_ModeExt;
+	CMPAByte m_ModeExt;
 };
 
 #endif /* MPAHEADER_D81F250B_BC1E_4921_97B5_E6DDED55D9E2 */

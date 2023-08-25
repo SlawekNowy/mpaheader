@@ -16,7 +16,7 @@ void CMPAFileStream::Init()
 {
 	m_dwBufferSize = INIT_BUFFERSIZE;
 	// fill buffer for first time
-	m_pBuffer = new char[m_dwBufferSize];
+	m_pBuffer = new CMPAByte[m_dwBufferSize];
 	FillBuffer(m_dwOffset, m_dwBufferSize, false);
 }
 
@@ -38,7 +38,7 @@ void CMPAFileStream::SetPosition(std::uint32_t dwOffset) const
 }
 
 
-char* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset, bool bReverse) const
+CMPAByte* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset, bool bReverse) const
 {
 	// enough bytes in buffer, otherwise read from file
 	if (m_dwOffset > dwOffset || ( ((int)((m_dwOffset + m_dwBufferSize) - dwOffset)) < (int)dwSize))
@@ -49,7 +49,7 @@ char* CMPAFileStream::ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, b
 		}
 	}
 
-	char* pBuffer = m_pBuffer + (dwOffset-m_dwOffset);
+	CMPAByte* pBuffer = m_pBuffer + (dwOffset-m_dwOffset);
 	if (bMoveOffset)
 		dwOffset += dwSize;
 	
@@ -73,7 +73,7 @@ bool CMPAFileStream::FillBuffer(std::uint32_t dwOffset, std::uint32_t dwSize, bo
 		delete[] m_pBuffer;
 
 		// reserve new buffer
-		m_pBuffer = new char[m_dwBufferSize];
+		m_pBuffer = new CMPAByte[m_dwBufferSize];
 	}	
 
 	if (bReverse)

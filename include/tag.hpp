@@ -25,7 +25,7 @@ protected:
 	float m_fVersion;		  // format x.yz
 	char *m_szName;			  // name of tag
 
-	void SetVersion(char bVersion1, char bVersion2 = 0, char bVersion3 = 0);
+	void SetVersion(CMPAByte bVersion1, CMPAByte bVersion2 = 0, CMPAByte bVersion3 = 0);
 };
 
 #endif /* TAG_AA44F1A4_E34F_411D_B471_A42EF1210830 */

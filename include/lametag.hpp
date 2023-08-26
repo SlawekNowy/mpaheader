@@ -13,8 +13,8 @@ public:
 
 	std::string m_strEncoder;
 	std::uint32_t m_dwLowpassFilterHz;
-	char m_bBitrate; // in kbps
-	char m_bRevision;
+	CMPAByte m_bBitrate; // in kbps
+	CMPAByte m_bRevision;
 
 	bool IsVBR() const;
 	bool IsABR() const;
@@ -25,7 +25,7 @@ public:
 private:
 	CLAMETag(CMPAStream *pStream, bool bAppended, std::uint32_t dwOffset);
 
-	char m_bVBRInfo;
+	CMPAByte m_bVBRInfo;
 	bool m_bSimpleTag;
 	static const char *m_szVBRInfo[10];
 };

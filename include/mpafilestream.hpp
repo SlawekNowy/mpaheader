@@ -24,7 +24,7 @@ private:
 	bool m_bMustReleaseFile;
 
 	// concerning read-buffer
-	mutable char* m_pBuffer;
+	mutable CMPAByte* m_pBuffer;
 	mutable std::uint32_t m_dwOffset;	// offset (beginning if m_pBuffer)
 	mutable std::uint32_t m_dwBufferSize;
 
@@ -37,5 +37,5 @@ protected:
 	// methods for file access (must be implemented by all derived classes)
 
 	virtual std::uint32_t GetSize() const override;
-	virtual char* ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset = true, bool bReverse = false) const override;
+	virtual CMPAByte* ReadBytes(std::uint32_t dwSize, std::uint32_t& dwOffset, bool bMoveOffset = true, bool bReverse = false) const override;
 };

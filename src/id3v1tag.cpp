@@ -9,7 +9,7 @@ CID3V1Tag *CID3V1Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t
 	{
 		// stands 128 byte before file end
 		std::uint32_t dwOffset = dwEnd - 128;
-		char *pBuffer = pStream->ReadBytes(3, dwOffset, false);
+		CMPAByte *pBuffer = pStream->ReadBytes(3, dwOffset, false);
 		if (std::memcmp("TAG", pBuffer, 3) == 0)
 			return new CID3V1Tag(pStream, dwOffset);
 	}
@@ -19,7 +19,7 @@ CID3V1Tag *CID3V1Tag::FindTag(CMPAStream *pStream, bool bAppended, std::uint32_t
 CID3V1Tag::CID3V1Tag(CMPAStream *pStream, std::uint32_t dwOffset) : CTag(pStream, "ID3", true, dwOffset, 128)
 {
 	dwOffset += 125;
-	char *pBuffer = pStream->ReadBytes(2, dwOffset, false);
+	CMPAByte *pBuffer = pStream->ReadBytes(2, dwOffset, false);
 
 	bool bIsV11 = false;
 	// check if V1.1 tag (byte 125 = 0 and byte 126 != 0)

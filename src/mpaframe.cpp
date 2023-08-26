@@ -109,7 +109,7 @@ bool CMPAFrame::CheckCRC() const
 }
 
 // CRC16 check
-std::uint16_t CMPAFrame::CalcCRC16(char *pBuffer, std::uint32_t dwBitSize)
+std::uint16_t CMPAFrame::CalcCRC16(CMPAByte *pBuffer, std::uint32_t dwBitSize)
 {
 	std::uint32_t n;
 	std::uint16_t tmpchar, crcmask, tmpi;

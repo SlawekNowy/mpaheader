@@ -2,6 +2,7 @@
 #define __MPACSTDFILE_HPP__
 
 #include "mpafilestream.hpp"
+#include <string>
 
 // Example implementation of CMPAIFile, based on C's fopen.
 struct DLLMPAH CMPACSTDFile : CMPAIFile
